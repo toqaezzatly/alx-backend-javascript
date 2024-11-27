@@ -10,28 +10,21 @@ const rl = readline.createInterface({
 });
 
 // Prompt user for their name and handle their input
-const askName = () => new Promise((resolve) => {
-  rl.question('Welcome to Holberton School, what is your name?\n', (name) => {
-    resolve(name);
+const askName = () => {
+  return new Promise((resolve) => {
+    rl.question('Welcome to Holberton School, what is your name?\n', (name) => {
+      resolve(name);
+    });
   });
-});
+};
 
 // Main function
 const main = async () => {
   try {
-    process.stdout.write('Welcome to Holberton School, what is your name?\n');
-
-    process.stdin.on('readable', () => {
-      const chunk = process.stdin.read();
-      if (chunk !== null) {
-        process.stdout.write(`Your name is: ${chunk}`);
-      }
-    });
-
-    process.stdin.on('end', () => {
-      process.stdout.write('This important software is now closing\n');
-    });
+    const name = await askName(); // Await user input
+    console.log(`Your name is: ${name}`);
   } finally {
+    console.log('This important software is now closing');
     rl.close(); // Close the readline interface
   }
 };
